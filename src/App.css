@@ -1,0 +1,33 @@
+.App {
+  text-align: center;
+}
+
+.Todo-Item {
+  width: 98%;
+  padding: 12px 0px;
+  margin: 12px 1%;
+
+  background: #f3f3f3;
+}
+
+.Todo-Item ul {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.Todo-Item ul li {
+  margin: 0px 12px;
+  text-align: start;
+}
+
+.Todo-Item ul li.Status{
+  text-wrap: nowrap;
+}
+
+.Todo-Item ul li.Main-Text{
+  overflow: hidden;
+}
