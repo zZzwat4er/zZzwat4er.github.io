@@ -9,10 +9,9 @@ import TgState from './states/TgState.ts';
 function App() {
 
   let [state, setState] = useState(new TodoState(State.init, []));
-
+  let acc = TgState.initState()
   if (state.state === State.init) {
     setState(new TodoState(State.loading, state.todos));
-    console.log(TgState.initState());
     fetch('https://odd-tan-ox-wig.cyclic.app/tasks')
       .then(res => {
         console.log(res.status);
@@ -28,6 +27,8 @@ function App() {
   return (
     <div className="App">
       <div>
+        <h1>The bot test</h1>
+        <p>{acc.user.id}</p>
         {state.todos.map((todo) => <TodoItem todo={todo} />)}
       </div>
     </div>
