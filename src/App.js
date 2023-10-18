@@ -15,21 +15,24 @@ function App() {
   let { user, _ } = useAuthContext();
   let [sheme, themeParams] = useThemeParams();
 
-  useEffect(async () => {
-    if (user?.id) {
+  useEffect(() => {
+    async function fetchTasks() {
       const users = await axios.get(`https://odd-tan-ox-wig.cyclic.app/users/`)
         .catch(e => setState([]));
       const usersJson = await users.data;
-      const currentUser =  usersJson.filter(e => e.telegramid === user.id);
-      if(currentUser.length === 0){
-        return
+      const currentUser = usersJson.filter(e => e.telegramid === user.id);
+      if (currentUser.length === 0) {
+        const uid = currentUser[0].userid;
+        const tasks = await axios.get(`https://odd-tan-ox-wig.cyclic.app/tasks/`)
+          .catch(e => setState([]));
+        const tasksJson = await tasks.data
+        let finalTasks = tasksJson.filter(e => e.userid === uid)
+        setState(finalTasks.map(e => Todo.from(e)));
       }
-      const uid = currentUser[0].userid;
-      const tasks = await axios.get(`https://odd-tan-ox-wig.cyclic.app/tasks/`)
-        .catch(e => setState([]));
-      const tasksJson = await tasks.data
-      let finalTasks = tasksJson.filter(e => e.userid === uid)
-      setState(finalTasks.map(e => Todo.from(e)));
+    }
+
+    if (user?.id) {
+      fetchTasks();
     }
   }, []);
 
@@ -44,7 +47,7 @@ function App() {
     }>
       <todoContext.Provider value={setState}>
         {user ? <div>
-          {state.map((todo) => <TodoItem todo={todo} />)}
+        {state.map((todo) => <TodoItem todo={todo} />)}
         </div>
           :
           <h1>Could not get user ID</h1>
