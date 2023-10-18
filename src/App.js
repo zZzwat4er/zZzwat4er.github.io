@@ -13,7 +13,6 @@ function App() {
   useEffect(() => {
     axios.get('https://odd-tan-ox-wig.cyclic.app/tasks')
       .then(res => {
-        console.log(res.data[1]);
         return res.data;
       })
       .then(json => {
@@ -27,7 +26,7 @@ function App() {
   return (
     <div className="App">
       <div>
-        <p>{acc.id}</p>
+        <h1>{acc.id}</h1>
         {state.map((todo) => <TodoItem todo={todo} />)}
       </div>
     </div>
