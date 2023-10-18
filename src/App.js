@@ -20,7 +20,7 @@ function App() {
       const users = await axios.get(`https://odd-tan-ox-wig.cyclic.app/users/`)
         .catch(e => setState([]));
       const usersJson = await users.data;
-      const currentUser = usersJson.filter(e => e.telegramid === user.id);
+      const currentUser = usersJson.filter(e => e.telegramid === user.id.toString());
       if (currentUser.length === 0) {
         const uid = currentUser[0].userid;
         const tasks = await axios.get(`https://odd-tan-ox-wig.cyclic.app/tasks/`)
