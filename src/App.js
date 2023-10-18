@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import './App.css';
 import { TodoItem } from './components/TodoItem';
-import TodoState, { LoadingStates } from './states/TodoState.ts';
+import TodoState from './states/TodoState.ts';
 import Todo from './models/Todo';
+import {State} from './states/States.ts';
+import TgState from './states/TgState.ts';
 
 function App() {
 
-  let [state, setState] = useState(new TodoState(LoadingStates.init, []));
+  let [state, setState] = useState(new TodoState(State.init, []));
 
-  if (state.state === LoadingStates.init) {
-    setState(new TodoState(LoadingStates.loading, state.todos));
+  if (state.state === State.init) {
+    setState(new TodoState(State.loading, state.todos));
+    console.log(TgState.initState());
     fetch('https://odd-tan-ox-wig.cyclic.app/tasks')
       .then(res => {
         console.log(res.status);
@@ -17,9 +20,9 @@ function App() {
         return res.json()
       })
       .then(json => {
-        setState(new TodoState(LoadingStates.done, json.map(e => Todo.from(e))))
+        setState(new TodoState(State.done, json.map(e => Todo.from(e))))
       })
-      .catch(e => setState(new TodoState(LoadingStates.error, [])));
+      .catch(e => setState(new TodoState(State.error, [])));
   }
   // console.log(state.todos);
   return (

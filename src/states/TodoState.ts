@@ -1,24 +1,16 @@
 import Todo from "../models/Todo";
+import { State } from "./States";
 
-export default class TodoState{
+export default class TodoState {
 
-    state : LoadingStates;
-    todos : Array<Todo>;
+    state: State;
+    todos: Array<Todo>;
 
     constructor(
-        state : LoadingStates,
-        todos : Array<Todo>,
-    ){
+        state: State,
+        todos: Array<Todo>,
+    ) {
         this.state = state;
         this.todos = todos;
     }
-
-
-}
-
-export enum LoadingStates{
-    loading,
-    error,
-    done,
-    init
 }
