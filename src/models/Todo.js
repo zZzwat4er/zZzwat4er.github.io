@@ -20,7 +20,6 @@ export default class Todo {
     }
 
     static from(json) {
-        console.log(json);
         return new Todo(
             json.taskid,
             json.userid,
