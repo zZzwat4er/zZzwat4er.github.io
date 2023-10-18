@@ -17,18 +17,10 @@ function App() {
 
   useEffect(() => {
     async function fetchTasks() {
-      const users = await axios.get(`https://odd-tan-ox-wig.cyclic.app/users/`)
+      const tasks = await axios.get(`https://odd-tan-ox-wig.cyclic.app/tasks/telegram/${user.id}`)
         .catch(e => setState([]));
-      const usersJson = await users.data;
-      const currentUser = usersJson.filter(e => e.telegramid === user.id.toString());
-      if (currentUser.length === 0) {
-        const uid = currentUser[0].userid;
-        const tasks = await axios.get(`https://odd-tan-ox-wig.cyclic.app/tasks/`)
-          .catch(e => setState([]));
-        const tasksJson = await tasks.data
-        let finalTasks = tasksJson.filter(e => e.userid === uid)
-        setState(finalTasks.map(e => Todo.from(e)));
-      }
+      const tasksJson = await tasks.data
+      setState(tasksJson.map(e => Todo.from(e)));
     }
 
     if (user?.id) {
@@ -47,7 +39,7 @@ function App() {
     }>
       <todoContext.Provider value={setState}>
         {user ? <div>
-        {state.map((todo) => <TodoItem todo={todo} />)}
+          {state.map((todo) => <TodoItem todo={todo} />)}
         </div>
           :
           <h1>Could not get user ID</h1>
