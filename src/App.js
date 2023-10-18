@@ -15,16 +15,21 @@ function App() {
   let { user, _ } = useAuthContext();
   let [sheme, themeParams] = useThemeParams();
 
-  useEffect(() => {
+  useEffect(async () => {
     if (user?.id) {
-      axios.get(`https://odd-tan-ox-wig.cyclic.app/tasks/${user.id}`)
-        .then(res => {
-          return res.data;
-        })
-        .then(json => {
-          setState(json.map(e => Todo.from(e)));
-        })
+      const users = await axios.get(`https://odd-tan-ox-wig.cyclic.app/users/`)
         .catch(e => setState([]));
+      const usersJson = await users.data;
+      const currentUser =  usersJson.filter(e => e.telegramid === user.id);
+      if(currentUser.length === 0){
+        return
+      }
+      const uid = currentUser[0].userid;
+      const tasks = await axios.get(`https://odd-tan-ox-wig.cyclic.app/tasks/`)
+        .catch(e => setState([]));
+      const tasksJson = await tasks.data
+      let finalTasks = tasksJson.filter(e => e.userid === uid)
+      setState(finalTasks.map(e => Todo.from(e)));
     }
   }, []);
 
