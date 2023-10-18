@@ -21,12 +21,12 @@ function App() {
       .catch(e => setState([]));
   }, []);
 
-  let acc = useAuthContext();
+  let {user, _} = useAuthContext();
 
   return (
     <div className="App">
       <div>
-        <h1>{acc.id}</h1>
+        <h1>{user?.id ?? 'null'}</h1>
         {state.map((todo) => <TodoItem todo={todo} />)}
       </div>
     </div>
