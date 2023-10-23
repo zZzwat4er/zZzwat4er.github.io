@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useThemeParams } from '@vkruglikov/react-telegram-web-app';
@@ -26,7 +27,7 @@ function App() {
     if (user?.id) {
       fetchTasks();
     }
-  }, []);
+  }, [user]);
 
 
 

@@ -1,5 +1,5 @@
-import React, { Component, useContext } from 'react'
-import Todo from '../models/Todo'
+/* eslint-disable no-unused-vars */
+import React, { useContext } from 'react'
 import { useThemeParams } from '@vkruglikov/react-telegram-web-app'
 import axios, { HttpStatusCode } from 'axios';
 import { todoContext } from '../App';
