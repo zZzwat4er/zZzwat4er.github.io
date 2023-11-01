@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+import React from 'react'
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useThemeParams } from '@vkruglikov/react-telegram-web-app';
@@ -27,7 +27,7 @@ function App() {
     if (user?.id) {
       fetchTasks();
     }
-  }, [user]);
+  }, [user.id]);
 
 
 
@@ -40,7 +40,7 @@ function App() {
     }>
       <todoContext.Provider value={setState}>
         {user ? <div>
-          {state.map((todo) => <TodoItem todo={todo} />)}
+          {state.map((todo) => <TodoItem key={todo.id} todo={todo} />)}
         </div>
           :
           <h1>Could not get user ID</h1>
