@@ -40,14 +40,12 @@ function App() {
       }
     }>
       <todoContext.Provider value={setState}>
-        <ul>
-          {user ? <div>
-            {state.map((todo) => <TodoItem key={todo.taskId} todo={todo} />)}
-          </div>
-            :
-            <h1>Could not get user ID</h1>
-          }
-        </ul>
+        {user ? <div>
+          {state.map((todo) => <TodoItem key={todo.taskId} todo={todo} />)}
+        </div>
+          :
+          <h1>Could not get user ID</h1>
+        }
       </todoContext.Provider>
     </div>
   );
