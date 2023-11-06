@@ -21,14 +21,14 @@ function App() {
       const tasks = await axios.get(`https://odd-tan-ox-wig.cyclic.app/tasks/telegram/${user.id}`)
         .catch(e => setState([]));
       const tasksJson = await tasks.data
-      const activeTasks = tasksJson.filter(tasksJson=>tasksJson.status === 'NOT DONE')
+      const activeTasks = tasksJson.filter(tasksJson => tasksJson.status === 'NOT DONE')
       setState(activeTasks.map(e => Todo.from(e)));
     }
 
     if (user?.id) {
       fetchTasks();
     }
-  }, [user.id]);
+  }, [user?.id]);
 
 
 
@@ -40,12 +40,14 @@ function App() {
       }
     }>
       <todoContext.Provider value={setState}>
-        {user ? <div>
-          {state.map((todo) => <TodoItem key={todo.id} todo={todo} />)}
-        </div>
-          :
-          <h1>Could not get user ID</h1>
-        }
+        <ul>
+          {user ? <div>
+            {state.map((todo) => <TodoItem key={todo.taskId} todo={todo} />)}
+          </div>
+            :
+            <h1>Could not get user ID</h1>
+          }
+        </ul>
       </todoContext.Provider>
     </div>
   );
