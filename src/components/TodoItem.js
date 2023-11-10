@@ -2,24 +2,31 @@ import React, { useState, useContext } from 'react'
 import { useThemeParams } from '@vkruglikov/react-telegram-web-app'
 import axios, { HttpStatusCode } from 'axios';
 import { todoContext } from '../App';
+import { useAnalytics } from '../hooks/useAnalytics';
+import { logEvent } from "firebase/analytics";
 
-export function TodoItem({ todo }) {
+export function TodoItem({ todo, fetchTasks }) {
   let [isEditing, setIsEditing] = useState(false);
-  let [editedMessage, setEditedMessage] = useState(todo.message);
+  const sender = todo.senderUrl ? "\n Sender: " + todo.senderUrl : '';
+  const msg = todo.message + sender;
+  let [editedMessage, setEditedMessage] = useState(msg);
   let [scheme, params] = useThemeParams();
 
   let setTodo = useContext(todoContext)
+  const { analytics } = useAnalytics();
 
   function completeTodo() {
     const status = 'DONE'
     axios.put(`https://odd-tan-ox-wig.cyclic.app/tasks/status/${todo.taskId}`, {status})
       .then(res => {
         if (res.status !== HttpStatusCode.InternalServerError) {
-          setTodo(prev => prev.filter(e => e.taskId !== todo.taskId));
+          logEvent(analytics, 'onDone')
+          // setTodo(prev => prev.filter(e => e.taskId !== todo.taskId));
+          fetchTasks();
         }
       })
       .catch(e => {
-        console.log('Failed to delete task')
+        console.log(e)
       });
   }
 
@@ -36,9 +43,7 @@ export function TodoItem({ todo }) {
       })
       .then((res) => {
         if (res.status !== HttpStatusCode.InternalServerError) {
-          setTodo((prev) =>
-            prev.map((e) => (e.taskId === todo.taskId ? { ...e, message: editedMessage } : e))
-          );
+          fetchTasks();
           setIsEditing(false);
         }
       })
