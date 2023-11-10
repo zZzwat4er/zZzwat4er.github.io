@@ -39,7 +39,7 @@ function App() {
     if (user?.id) {
       fetchTasks();
     }
-  }, [user?.id, fetchTasks]);
+  }, [user?.id]);
 
   const openAddModal = () => {
     setIsAddModalOpen(true);
