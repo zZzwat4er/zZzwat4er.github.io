@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react'
-import { useThemeParams } from '@vkruglikov/react-telegram-web-app'
 import axios, { HttpStatusCode } from 'axios';
 import { todoContext } from '../App';
 import { useAnalytics } from '../hooks/useAnalytics';
@@ -10,7 +9,6 @@ export function TodoItem({ todo, fetchTasks }) {
   const sender = todo.senderUrl ? "\n Sender: " + todo.senderUrl : '';
   const msg = todo.message + sender;
   let [editedMessage, setEditedMessage] = useState(msg);
-  let [scheme, params] = useThemeParams();
 
   let setTodo = useContext(todoContext)
   const { analytics } = useAnalytics();
@@ -56,9 +54,7 @@ export function TodoItem({ todo, fetchTasks }) {
   }
 
   return (
-    <div className='Todo-Item' style={{
-      background: params.button_color
-    }}>
+    <div className='Todo-Item'>
       {isEditing ? (
         <ul className='Edit-Form'>
           {/*<p className='Main-Text'>{todo.message}</p>*/}
