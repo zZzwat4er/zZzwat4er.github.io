@@ -21,7 +21,7 @@ const initTheme = () => {
   if (window?.Telegram?.WebApp.initData !== "") {
     theme = window.Telegram.WebApp.themeParams
   }
-  document.styleSheets[2].insertRule(`
+  document.styleSheets[0].insertRule(`
     :root{
       --tg-theme-bg-color: ${theme.bg_color};
       --tg-theme-text-color: ${theme.text_color};
