@@ -1,4 +1,5 @@
 import {TodoItem} from "../components/TodoItem";
+import {CompletedItem} from "../components/CompletedItem";
 import React, {useEffect, useState} from "react";
 import {useAuthContext} from "../hooks/useAuthContext";
 import axios from "axios";
@@ -95,7 +96,7 @@ export function Home() {
           {hasCompletedTasks ? (
             state
               .filter((todo) => todo.status === 'DONE')
-              .map((todo) => <TodoItem key={todo.taskId} todo={todo} />)
+              .map((todo) => <CompletedItem key={todo.taskId} todo={todo} fetchTasks={fetchTasks} />)
           ) : (
             <p>No completed tasks</p>
           )}
